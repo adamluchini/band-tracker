@@ -46,7 +46,7 @@ namespace BandTracker
     }
 
     [Fact]
-    public void Test_Find_FindsBandNameByVenueId()
+    public void Test_Find_FindsVenueNameByVenueId()
     {
       Venue newVenue = new Venue ("The Rage Hut");
       newVenue.Save();
@@ -54,6 +54,19 @@ namespace BandTracker
       Venue foundVenue = Venue.Find(newVenue.GetId());
 
       Assert.Equal(newVenue, foundVenue);
+    }
+
+    [Fact]
+    public void Test_Update_UpdatesVenueName()
+    {
+      Venue newVenue = new Venue("The Rage Hut");
+      newVenue.Save();
+      string newName = "The Quiet Space";
+
+      newVenue.Update(newName);
+      string updatedName = Venue.Find(newVenue.GetId()).GetName();
+
+      Assert.Equal(newName, updatedName);
     }
   }
 }
