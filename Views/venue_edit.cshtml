@@ -1,0 +1,11 @@
+<h1>venue edit</h1>
+<hr />
+<h2>Edit venue: @Model.GetName()</h2>
+<form action="/edit_venues/@Model.GetId()" method="post">
+  <input type="hidden" name="_method" value="PATCH">
+  <input name="venue-id" type="hidden" value="@Model.GetId()">
+  <label for="venue-name">enter the new venue name</label>
+  <input id="venue-name" name="venue-name" type="text">
+  <button type="submit">Submit</button>
+</form>
+<h4><a href="/">Return home</a></h4>

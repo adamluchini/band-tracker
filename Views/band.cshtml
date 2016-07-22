@@ -1,41 +1,26 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Band Tracker</title>
-  </head>
-  <body>
-    <h2>@Model["band"].GetName() <span class="edit-link"><a href="/bands/update/@Model["band"].GetId()">Edit this Band</a><span></h2>
-
-
-    @if (Model["venuesPlayed"].Count == 0)
+<h1>Band Tracker</h1>
+<h2>Band: @Model["band"].GetName()</h2>
+<hr />
+@if (@Model["bandVenues"].Count != 0)
+{
+  <h4>Venues that have hosted this band:</h4>
+  <ul>
+    @foreach (var venue in @Model["bandVenues"])
     {
-      <p>This band has not played any venues.</p>
+      <li>@venue.GetName()</li>
     }
-    else
+  </ul>
+}
+<h4>Add a venue to this band:</h4>
+<form action='/band/add_venue' method='post'>
+  <input id='band-id' name='band-id' type='hidden' value='@Model["band"].GetId()'>
+  <label for='venue-id'>Select a venue</label>
+  <select id='venue-id' name='venue-id' type='text'>
+    @foreach (var venue in @Model["allVenues"])
     {
-      <ul>
-      @foreach (var venue in Model["venuesPlayed"])
-      {
-        <li><a href="/venues/@venue.GetId()">@venue.GetName()</a></li>
-      }
-      </ul>
+      <option value='@venue.GetId()'>@venue.GetName()</option>
     }
-
-    <h3>Add a venue to this band</h3>
-    <form action="/bands/@Model["band"].GetId()" method="post">
-      <input type="hidden" name="band_id" value="@Model["band"].GetId()">
-      <select name="add_new_venue">
-        @foreach(var venue in @Model["allVenues"])
-        {
-          <option value="@venue.GetId()">@venue.GetName()</option>
-        }
-      </select>
-      <button type="submit">Add this Venue</button>
-    </form>
-
-    <p><a href="/bands/delete/@Model["band"].GetId()">Delete this band</a></p>
-
-    <a href="/">Back to Main Page</a>
-  </body>
-</html>
+  </select>
+  <button type='submit'>Add</button>
+</form>
+<p><a href="/">Return to Main Page</a></p>
