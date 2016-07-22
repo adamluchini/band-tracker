@@ -68,5 +68,18 @@ namespace BandTracker
 
       Assert.Equal(newName, updatedName);
     }
+
+    [Fact]
+    public void Test_AddBand_SavesBandToVenueDatabase()
+    {
+      Venue newVenue = new Venue ("The Rage Hut");
+      newVenue.Save();
+      Band newBand = new Band ("The Bananas");
+      newBand.Save();
+      newVenue.AddBand(newBand);
+      List<Band> testBandList = new List<Band> {newBand};
+      List<Band> resultBandList = newVenue.GetBands();
+      Assert.Equal(testBandList, resultBandList);
+    }
   }
 }
