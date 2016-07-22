@@ -35,13 +35,13 @@ namespace BandTracker
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr;
-      SqlCommand cmd = new SqlCommand ("SELECT * FROM bands;", conn);
+      SqlCommand cmd = new SqlCommand ("SELECT * FROM bands", conn);
       rdr = cmd.ExecuteReader();
       while (rdr.Read())
       {
         int bandId = rdr.GetInt32(0);
         string bandName = rdr.GetString(1);
-        Band newBand = new Band (bandName, bandId);
+        Band newBand = new Band(bandName, bandId);
         allBands.Add(newBand);
       }
       if (rdr != null)
