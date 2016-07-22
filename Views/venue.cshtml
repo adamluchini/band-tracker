@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Band Tracker</title>
+  </head>
+  <body>
+    <h2>@Model["venue"].GetName() <span class="edit-link"><a href="/venues/update/@Model["venue"].GetId()">Edit this Venue</a><span> </h2>
+
+@if (Model["venueBands"].Count == 0)
+{
+  <p>There are no bands associated with this venue.</p>
+}
+else
+{
+  <ul>
+  @foreach (var band in Model["venueBands"])
+  {
+    <li><a href="/bands/@band.GetId()">@band.GetName()</a></li>
+  }
+  </ul>
+}
+
+<h3>Add a band to this venue</h3>
+<form action="/venues/@Model["venue"].GetId()" method="post">
+  <input type="hidden" name="venue_id" value="@Model["venue"].GetId()">
+  <select name="add_new_band">
+    @foreach(var band in @Model["allBands"])
+    {
+      <option value="@band.GetId()">@band.GetName()</option>
+    }
+  </select>
+  <button type="submit">Add this Band</button>
+</form>
+
+<p><a href="/venues/delete/@Model["venue"].GetId()">Delete this venue</a></p>
+
+
+<a href="/">Back to Main Page</a>
+
+  </body>
+</html>
