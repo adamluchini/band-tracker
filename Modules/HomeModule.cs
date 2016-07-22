@@ -20,7 +20,6 @@ namespace BandTracker
         List<Venue> AllVenues = Venue.GetAll();
         return View["venues.cshtml", AllVenues];
       };
-      //Create a new band
       Get["/bands/new"] = _ => {
         return View["bands_form.cshtml"];
       };
@@ -74,15 +73,6 @@ namespace BandTracker
       Delete["/delete_venues/{id}"] = parameters => {
         Venue SelectedVenue = Venue.Find(parameters.id);
         SelectedVenue.Delete();
-        return View["venues.cshtml", Venue.GetAll()];
-      };
-      Get["/edit_venues/{id}"] = parameters => {
-        Venue SelectedVenue = Venue.Find(parameters.id);
-        return View["venue_edit.cshtml", SelectedVenue];
-      };
-      Patch["/edit_venues/{id}"] = parameters => {
-        Venue SelectedVenue = Venue.Find(parameters.id);
-        SelectedVenue.Update(Request.Form["venue-name"]);
         return View["venues.cshtml", Venue.GetAll()];
       };
     }
