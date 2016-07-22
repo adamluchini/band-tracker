@@ -43,5 +43,16 @@ namespace BandTracker
 
       Assert.Equal(testList, resultList);
     }
+
+    [Fact]
+    public void Test_Find_FindsBandNameByBandId()
+    {
+      Band newBand = new Band ("The Bananas");
+      newBand.Save();
+
+      Band foundBand = Band.Find(newBand.GetId());
+
+      Assert.Equal(newBand, foundBand);
+    }
   }
 }
