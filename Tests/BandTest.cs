@@ -6,15 +6,19 @@ using Xunit;
 
 namespace BandTracker
 {
-  public class BandTest
+  public class BandTest : IDisposable
   {
+    public void Dispose()
+  {
+    Band.DeleteAll();
+  }
     public BandTest()
     {
       DBConfiguration.ConnectionString = "Data Source=(local)\\SQLEXPRESS;Initial Catalog=band_tracker;Integrated Security=SSPI;";
     }
 
     [Fact]
-    public void Test_Empty_DatabaseEmpty()
+    public void Test_Empty_DatabaseEmptyandGetAll()
     {
       int resultValue = Band.GetAll().Count;
       Assert.Equal(0, resultValue);
@@ -26,6 +30,18 @@ namespace BandTracker
       Band firstBand = new Band ("The Bananas");
       Band secondBand = new Band ("The Bananas");
       Assert.Equal(firstBand, secondBand);
+    }
+
+    [Fact]
+    public void Test_SavesBandToDataBase()
+    {
+      Band newBand = new Band ("The Bananas");
+      newBand.Save();
+
+      List<Band> testList = new List<Band> {newBand};
+      List<Band> resultList = Band.GetAll();
+
+      Assert.Equal(testList, resultList);
     }
   }
 }
