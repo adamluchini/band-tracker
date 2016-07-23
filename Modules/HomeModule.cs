@@ -26,7 +26,8 @@ namespace BandTracker
       Post["/bands/new"] = _ => {
         Band newBand = new Band(Request.Form["band-name"]);
         newBand.Save();
-        return View["index.cshtml"];
+        List<Band> allBands = Band.GetAll();
+        return View["bands.cshtml", allBands];
       };
       Get["/venues/new"] = _ => {
         return View["venues_form.cshtml"];
@@ -34,7 +35,8 @@ namespace BandTracker
       Post["/venues/new"] = _ => {
         Venue newVenue = new Venue(Request.Form["venue-name"]);
         newVenue.Save();
-        return View["index.cshtml"];
+        List<Venue> allVenues = Venue.GetAll();
+        return View["venues.cshtml", allVenues];
       };
       Get["bands/{id}"] = parameters => {
         Dictionary<string, object> model = new Dictionary<string, object>();
@@ -74,6 +76,11 @@ namespace BandTracker
         Venue SelectedVenue = Venue.Find(parameters.id);
         SelectedVenue.Delete();
         return View["venues.cshtml", Venue.GetAll()];
+      };
+      Delete["/delete_bands/{id}"] = parameters => {
+        Band SelectedBand = Band.Find(parameters.id);
+        SelectedBand.Delete();
+        return View["bands.cshtml", Band.GetAll()];
       };
     }
   }
