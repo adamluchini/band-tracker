@@ -81,6 +81,16 @@ namespace BandTracker
     Assert.Equal(testVenueList, resultVenueList);
   }
 
+  public void Test_Delete_DeletesBand()
+    {
+      Band testBand = new Band ("The Bananas");
+      testBand.Save();
+      List<Band> testList = new List<Band> {};
+      testBand.Delete();
+      List<Band> resultList = Band.GetAll();
+      Assert.Equal(testList, resultList);
+    }
+
 
   }
 }
