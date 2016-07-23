@@ -26,8 +26,7 @@ namespace BandTracker
       Post["/bands/new"] = _ => {
         Band newBand = new Band(Request.Form["band-name"]);
         newBand.Save();
-        List<Band> allBands = Band.GetAll();
-        return View["bands.cshtml", allBands];
+        return View["bands.cshtml", Band.GetAll()];
       };
       Get["/venues/new"] = _ => {
         return View["venues_form.cshtml"];
@@ -35,8 +34,7 @@ namespace BandTracker
       Post["/venues/new"] = _ => {
         Venue newVenue = new Venue(Request.Form["venue-name"]);
         newVenue.Save();
-        List<Venue> allVenues = Venue.GetAll();
-        return View["venues.cshtml", allVenues];
+        return View["venues.cshtml", Venue.GetAll()];
       };
       Get["bands/{id}"] = parameters => {
         Dictionary<string, object> model = new Dictionary<string, object>();
@@ -64,13 +62,13 @@ namespace BandTracker
         Venue venue = Venue.Find(Request.Form["venue-id"]);
         Band band = Band.Find(Request.Form["band-id"]);
         band.AddVenue(venue);
-        return View["bands.cshtml"];
+        return View["bands.cshtml", Band.GetAll()];
       };
       Post["venue/add_band"] = _ => {
         Venue venue = Venue.Find(Request.Form["venue-id"]);
         Band band = Band.Find(Request.Form["band-id"]);
         venue.AddBand(band);
-        return View["venues.cshtml"];
+        return View["venues.cshtml", Venue.GetAll()];
       };
       Delete["/delete_venues/{id}"] = parameters => {
         Venue SelectedVenue = Venue.Find(parameters.id);
@@ -80,6 +78,24 @@ namespace BandTracker
       Delete["/delete_bands/{id}"] = parameters => {
         Band SelectedBand = Band.Find(parameters.id);
         SelectedBand.Delete();
+        return View["bands.cshtml", Band.GetAll()];
+      };
+      Get["/edit_venues/{id}"] = parameters => {
+        Venue SelectedVenue = Venue.Find(parameters.id);
+        return View["venue_edit.cshtml", SelectedVenue];
+      };
+      Patch["/edit_venues/{id}"] = parameters => {
+        Venue SelectedVenue = Venue.Find(parameters.id);
+        SelectedVenue.Update(Request.Form["venue-name"]);
+        return View["venues.cshtml", Venue.GetAll()];
+      };
+      Get["/edit_bands/{id}"] = parameters => {
+        Band SelectedBand = Band.Find(parameters.id);
+        return View["venue_edit.cshtml", SelectedBand];
+      };
+      Patch["/edit_bands/{id}"] = parameters => {
+        Band SelectedBand = Band.Find(parameters.id);
+        SelectedBand.Update(Request.Form["band-name"]);
         return View["bands.cshtml", Band.GetAll()];
       };
     }
