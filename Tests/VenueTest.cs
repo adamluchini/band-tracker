@@ -15,7 +15,7 @@ namespace BandTracker
   }
     public VenueTest()
     {
-      DBConfiguration.ConnectionString = "Data Source=(local)\\SQLEXPRESS;Initial Catalog=band_tracker;Integrated Security=SSPI;";
+      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=band_tracker_test;Integrated Security=SSPI;";
     }
 
     [Fact]
