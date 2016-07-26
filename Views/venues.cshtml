@@ -7,9 +7,9 @@
     @foreach (var venue in Model)
     {
       <li>
-        <form action="/delete_venues/@venue.GetId()" method="post">
+        <form action="/venues/delete/@venue.GetId()" method="post">
           <a href="/venues/@venue.GetId()">@venue.GetName()</a>
-           <a href = "/edit_venues/@venue.GetId()"><button type="button">Edit</button></a>
+           <a href = "/venues/edit/@venue.GetId()"><button type="button">Edit</button></a>
            <input type="hidden" name="_method" value="DELETE">
           <button type="submit">Delete</button>
         </form>

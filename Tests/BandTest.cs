@@ -68,6 +68,7 @@ namespace BandTracker
 
       Assert.Equal(newName, updatedName);
     }
+
     [Fact]
   public void Test_AddVenue_SavesVenueToBand()
   {
@@ -80,7 +81,7 @@ namespace BandTracker
     List<Venue> resultVenueList = newBand.GetVenues();
     Assert.Equal(testVenueList, resultVenueList);
   }
-
+  [Fact]
   public void Test_Delete_DeletesBand()
     {
       Band testBand = new Band ("The Bananas");
